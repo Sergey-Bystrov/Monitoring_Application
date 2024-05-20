@@ -1,0 +1,89 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+body{
+    background: url("../images/img.jpeg");
+    display: flex;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#metricsHistory {
+    margin-top: 1%;
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    left: 40px;
+    text-align: center;
+    border-radius: 12px;
+}
+#metricsHistory a {
+    color: white;
+    text-decoration: none;
+}
+#reserve {
+    margin-top: 1%;
+    position: absolute;
+    width: 80px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    left: 180px;
+    text-align: center;
+    border-radius: 12px;
+}
+#reserve a {
+    color: white;
+    text-decoration: none;
+}
+#temperature{
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 3%;
+    margin-left: 55%;
+    color: white;
+    font-size: 1.6em;
+    font-family: "Comic Sans MS"
+}
+#temperature h1{
+    font-size: 1.3em;
+    margin-left: 100px;
+}
+#addToEnglishButton{
+    cursor: pointer;
+}
+#humidity{
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 12%;
+    margin-left: 55%;
+    color: white;
+    font-size: 1.6em;
+    font-family: "Comic Sans MS"
+}
+#humidity h1{
+    font-size: 1.3em;
+    margin-left: 100px;
+}
+#metricsHistory {
+    margin-top: 1%;
+    position: absolute;
+    width: 80px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    left: 80px;
+    text-align: center;
+    border-radius: 12px;
+}
+#metricsHistory a {
+    color: white;
+    text-decoration: none;
+}

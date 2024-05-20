@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="../static/css/StartPage.css">
+<!--    <script src="../static/js/englishDictScript.js"></script>-->
+</head>
+<body>
+<div id="metricsHistory"><li><a href="home.html">Главная</a></li></div>
+<div id="reserve"><li><a href="library.html">Библиотека</a></li></div>
+<!--<div id="EnglishDictionary">
+    &lt;!&ndash;<p th:each="enLines : ${allEnglishLines}" th:text="${enLines.key} + ' &#45;&#45; ' + ${enLines.value}"/>&ndash;&gt;
+</div>-->
+<div id="temperature">
+    <h1>Температура</h1>
+    <p th:text="${temperatureValue}"/>
+<!--    <form action="englishDictionary.html" method="post">
+        <input type="text" name="key" placeholder="Введите слово">
+        <input type="text" name="value" placeholder="Введите значение">
+        <button id="addToEnglishButton" type="submit">Добавить</button>
+    </form>-->
+</div>
+<div id="humidity">
+    <h1>Влажность</h1>
+    <p th:text="${humidityValue}"/>
+    <!--<form action="/englishWord.html" method="post">
+        <input type="text" name="keyword" placeholder="Введите слово">
+        <button id="findEnglBykeyButton" >Найти</button>
+    </form>-->
+</div>
+
+<!--<div id="addFormEngl">-->
+<!--    <h1>Добавить запись</h1>-->
+<!--    <form name="addToEnDictForm" >-->
+<!--        <input  type="text" name="key" placeholder="Введите слово">-->
+<!--        <input  type="text" name="value" placeholder="Введите значение">-->
+<!--        <button id="addToEnglishButton" type="submit" onclick="addToEnDictionary()">Добавить</button>-->
+<!--    </form>-->
+<!--</div>-->
+</body>
+</html>
