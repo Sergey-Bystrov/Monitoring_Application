@@ -3,40 +3,50 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title th:text="${title}"></title>
-    <link rel="stylesheet" href="../static/css/StartPage.css">
-<!--    <script src="../static/js/englishDictScript.js"></script>-->
+    <link rel="stylesheet" href="../static/css/StartPageStyle.css">
+    <!--<script src="../static/jQuery/jquery-3.6.4.min.js"></script>-->
+    <!--<script src="/static/js/StartPage.js"></script>-->
+    <!--<script th:src="@{/static/js/StartPage.js}"></script>-->
 </head>
 <body>
-<div id="metricsHistory"><li><a href="home.html">Главная</a></li></div>
-<div id="reserve"><li><a href="library.html">Библиотека</a></li></div>
-<!--<div id="EnglishDictionary">
-    &lt;!&ndash;<p th:each="enLines : ${allEnglishLines}" th:text="${enLines.key} + ' &#45;&#45; ' + ${enLines.value}"/>&ndash;&gt;
-</div>-->
+<button id="MetricsHistory" class="btn btn-dark" onclick="window.location.href='MeasurementHistoryPage';">
+    ИСТОРИЯ
+</button>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateData() {
+            fetch('/update_info')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperature').textContent = data.temperatureValue;
+                    document.getElementById('humidity').textContent = data.humidityValue;
+                    document.getElementById('weight').textContent = data.weightValue;
+                    document.getElementById('time').textContent = data.timeValue;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        setInterval(updateData, 15000); // Update every 15 seconds
+
+        // Initial call to populate data right away
+        //updateData();
+    });
+</script>
 <div id="temperature">
     <h1>Температура</h1>
     <p th:text="${temperatureValue}"/>
-<!--    <form action="englishDictionary.html" method="post">
-        <input type="text" name="key" placeholder="Введите слово">
-        <input type="text" name="value" placeholder="Введите значение">
-        <button id="addToEnglishButton" type="submit">Добавить</button>
-    </form>-->
 </div>
 <div id="humidity">
     <h1>Влажность</h1>
     <p th:text="${humidityValue}"/>
-    <!--<form action="/englishWord.html" method="post">
-        <input type="text" name="keyword" placeholder="Введите слово">
-        <button id="findEnglBykeyButton" >Найти</button>
-    </form>-->
 </div>
-
-<!--<div id="addFormEngl">-->
-<!--    <h1>Добавить запись</h1>-->
-<!--    <form name="addToEnDictForm" >-->
-<!--        <input  type="text" name="key" placeholder="Введите слово">-->
-<!--        <input  type="text" name="value" placeholder="Введите значение">-->
-<!--        <button id="addToEnglishButton" type="submit" onclick="addToEnDictionary()">Добавить</button>-->
-<!--    </form>-->
-<!--</div>-->
+<div id="weight">
+    <h1>Вес</h1>
+    <p th:text="${weightValue}"/>
+</div>
+<div id="time">
+    <h1>Время</h1>
+    <p th:text="${timeValue}"/>
+</div>
 </body>
 </html>

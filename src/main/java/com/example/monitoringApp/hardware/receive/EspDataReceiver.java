@@ -1,8 +1,9 @@
 package com.example.monitoringApp.hardware.receive;
 
+import arduino.AlertBox;
 import arduino.Arduino;
 import com.example.monitoringApp.logMessages.Errors;
-import com.example.monitoringApp.data.EspReceiveMessageDTO;
+import com.example.monitoringApp.data.dto.EspReceiveMessageDTO;
 import com.example.monitoringApp.logMessages.Info;
 import com.fazecast.jSerialComm.SerialPort;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -22,14 +24,15 @@ public class EspDataReceiver {
     private String espConnectPort;
     private String messsage;
     private volatile EspReceiveMessageDTO messageDto;
+    private SerialPort comPort = SerialPort.getCommPort(espConnectPort);
 
     @Async
-    public CompletableFuture<EspReceiveMessageDTO> receiveData() {
+    public CompletableFuture<EspReceiveMessageDTO>  receiveData() {
         Arduino espBoard = new Arduino(espConnectPort, 9600);
-
-        System.out.println("Hello world!");
-
-        boolean connected = espBoard.openConnection();
+        log.info("Try connected to board on : " + espConnectPort);
+        //log.info("Result : " + espBoard.openConnection());
+        boolean connected = openConnection();//espBoard.openConnection();
+        log.info("Connected to board on : " + espConnectPort + " = " + connected);
         try {
             Thread.sleep(4000);
             log.info(Info.ESP_BORD_CONNECT_SUCCESSFULLY.getInfo() + connected);
@@ -39,7 +42,9 @@ public class EspDataReceiver {
         }
 
         try {
+            espBoard.serialWrite('1');
             messsage = espBoard.serialRead();
+            log.info("ESP primary messsage" + messsage);
             messageDto = mapMessageFromBoard(messsage);
             return CompletableFuture.completedFuture(messageDto);
         } catch (IllegalArgumentException e){
@@ -57,10 +62,29 @@ public class EspDataReceiver {
             log.error(Errors.INVALID_MESSAGE_FORMAT_FROM_ESP_BORD.getError());
             throw new IllegalArgumentException();
         }
-        return new EspReceiveMessageDTO(data[0], data[1], data[2], data[3]);
+        return new EspReceiveMessageDTO(data[0], data[1], data[2]);
     }
 
     public EspReceiveMessageDTO getMessageDto() {
         return messageDto;
+    }
+
+    public boolean openConnection() {
+        log.info("Try to open connection");
+        if (this.comPort.openPort()) {
+            try {
+                log.info("Port opened, sleeping for 100ms...");
+                Thread.sleep(100L);
+            } catch (Exception var2) {
+                log.info("Exception during sleep: " + var2);
+            }
+
+            return true;
+        } else {
+            log.info("Failed to open port.");
+            AlertBox alert = new AlertBox(new Dimension(400, 100), "Error Connecting", "Try Another port");
+            alert.display();
+            return false;
+        }
     }
 }

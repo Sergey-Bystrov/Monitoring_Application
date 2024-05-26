@@ -1,9 +1,10 @@
-*{
+* {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
 }
-body{
+
+body {
     background: url("../images/img.jpeg");
     display: flex;
     height: 100vh;
@@ -12,20 +13,23 @@ body{
     background-position: center;
 }
 
-#metricsHistory {
-    margin-top: 1%;
+#MetricsHistory {
+    margin-top: 3%;
     position: absolute;
     width: 100px;
     height: 40px;
     background: rgba(0, 0, 0, 0.4);
-    left: 40px;
+    margin-left: 45%;
     text-align: center;
+    color: white;
     border-radius: 12px;
 }
-#metricsHistory a {
+
+#MetricsHistory a {
     color: white;
     text-decoration: none;
 }
+
 #reserve {
     margin-top: 1%;
     position: absolute;
@@ -36,11 +40,13 @@ body{
     text-align: center;
     border-radius: 12px;
 }
+
 #reserve a {
     color: white;
     text-decoration: none;
 }
-#temperature{
+
+#temperature {
     position: absolute;
     width: 400px;
     height: 100px;
@@ -51,14 +57,13 @@ body{
     font-size: 1.6em;
     font-family: "Comic Sans MS"
 }
-#temperature h1{
+
+#temperature h1 {
     font-size: 1.3em;
     margin-left: 100px;
 }
-#addToEnglishButton{
-    cursor: pointer;
-}
-#humidity{
+
+#humidity {
     position: absolute;
     width: 400px;
     height: 100px;
@@ -69,10 +74,46 @@ body{
     font-size: 1.6em;
     font-family: "Comic Sans MS"
 }
-#humidity h1{
+
+#humidity h1 {
     font-size: 1.3em;
     margin-left: 100px;
 }
+
+#weight {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 21%;
+    margin-left: 55%;
+    color: white;
+    font-size: 1.6em;
+    font-family: "Comic Sans MS"
+}
+
+#weight h1 {
+    font-size: 1.3em;
+    margin-left: 100px;
+}
+
+#time {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 30%;
+    margin-left: 55%;
+    color: white;
+    font-size: 1.6em;
+    font-family: "Comic Sans MS"
+}
+
+#time h1 {
+    font-size: 1.3em;
+    margin-left: 100px;
+}
+
 #metricsHistory {
     margin-top: 1%;
     position: absolute;
@@ -83,7 +124,25 @@ body{
     text-align: center;
     border-radius: 12px;
 }
+
 #metricsHistory a {
     color: white;
     text-decoration: none;
+}
+
+#MeasurementHistory {
+    position: absolute;
+    width: 600px;
+    height: 500px;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: 15%;
+    margin-left: 5%;
+    overflow: auto;
+    color: white;
+    font-size: 1.6em;
+    font-family: "Comic Sans MS";
+}
+
+#MeasurementHistory p {
+    position: sticky;
 }

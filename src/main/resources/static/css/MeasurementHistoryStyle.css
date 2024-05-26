@@ -1,0 +1,131 @@
+body {
+    background: url("../images/img.jpeg");
+    display: flex;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#ChangePeriodBtn {
+    margin-top: 1%;
+    width: 200px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    border-radius: 12px;
+    position: absolute;
+    left: 30%;
+}
+
+#ChangePeriodBtn a {
+    color: white;
+    text-decoration: none;
+}
+
+#ReturnStarPageBtn {
+    margin-top: 1%;
+    width: 120px;
+    height: 35px;
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    border-radius: 12px;
+    position: absolute;
+    left: 5%;
+}
+
+#ReturnStarPageBtn a {
+    color: white;
+    text-decoration: none;
+}
+
+#datePickers {
+    margin-top: 1%;
+    display: none; /* Скрыт по умолчанию */
+    position: absolute;
+    left: 30%;
+    top: 10%;
+}
+
+#MeasurementHistory {
+    position: absolute;
+    width: 600px;
+    height: 700px;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: 1%;
+    left: 45%;
+    overflow: auto;
+    color: white;
+    font-size: 1.6em;
+    font-family: "Comic Sans MS";
+}
+
+#MeasurementHistory p {
+    position: sticky;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#MaxValuesInPeriod {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.6);
+    margin-top: 3%;
+    margin-left: 5%;
+    color: white;
+    font-size: 1.1em;
+    text-align: center;
+    font-family: "Comic Sans MS"
+}
+
+#MaxTemperatureInPeriod {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.6);
+    margin-top: 10%;
+    margin-left: 5%;
+    color: white;
+    font-size: 1.2em;
+    font-family: "Comic Sans MS"
+}
+
+#MaxTemperatureInPeriod h1 {
+    font-size: 1.4em;
+    text-align: center;
+}
+
+#MaxHumidityInPeriod {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.6);
+    margin-top: 19%;
+    margin-left: 5%;
+    color: white;
+    font-size: 1.1em;
+    font-family: "Comic Sans MS"
+}
+
+#MaxHumidityInPeriod h1 {
+    font-size: 1.4em;
+    text-align: center;
+}
+
+#MaxWeightInPeriod {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.6);
+    margin-top: 28%;
+    margin-left: 5%;
+    color: white;
+    font-size: 1.1em;
+    font-family: "Comic Sans MS"
+}
+
+#MaxWeightInPeriod h1 {
+    font-size: 1.4em;
+    text-align: center;
+}

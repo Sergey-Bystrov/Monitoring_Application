@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="../static/css/MeasurementHistoryStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+<button id="ReturnStarPageBtn" class="btn btn-dark" onclick="window.location.href='/';">
+    ГЛАВНАЯ
+</button>
+<button id="ChangePeriodBtn" class="btn btn-dark">
+    <a>Выбрать период</a>
+</button>
+<div id="datePickers">
+    <input type="text" id="startDate" placeholder="Дата начала" class="form-control">
+    <input type="text" id="endDate" placeholder="Дата конца" class="form-control">
+    <button id="applyPeriod" class="btn btn-success">Применить</button>
+</div>
+<div id="MeasurementHistory">
+    <p th:each="element : ${MeasurementDataCollection}"
+       th:text="${element.time} + ' -- ' + ${element.temperature} + ' -- ' + ${element.humidity} + ' -- ' + ${element.weight}"></p>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ChangePeriodBtn").click(function () {
+            $("#datePickers").toggle();
+        });
+
+        $("#startDate").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+
+        $("#endDate").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+
+        $("#applyPeriod").click(function () {
+            var startDate = $("#startDate").val() + "T00:00:00Z";
+            var endDate = $("#endDate").val() + "T23:59:59Z"; // End of day;
+            console.log("Выбранный период: " + startDate + " - " + endDate);
+            if (startDate > endDate) {
+                alert("Дата начала не должна быть позже даты окончания.");
+                return;
+            }
+
+            $.ajax({
+                url: '/measurement/history',
+                method: 'GET',
+                data: {
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                success: function (data) {
+                    console.log('Данные от сервера:', data);
+
+                    var historyDiv = $("#MeasurementHistory");
+                    historyDiv.empty(); // Очищаем содержимое MeasurementHistory
+                    if (Array.isArray(data)) {
+                        var maxTemperature = null;
+                        var maxHumidity = null;
+                        var maxWeight = null;
+                        var maxHumidityTime = null;
+                        var maxWeight = null;
+                        var maxWeightTime = null;
+
+                    data.forEach(function (item) {
+                        // Создаем новый элемент <p> и добавляем его в конец блока MeasurementHistory
+                        var pElement = $('<p>').text(item.time + ' -- ' + item.temperature + ' -- ' + item.humidity + ' -- ' + item.weight);
+                        historyDiv.append(pElement);
+
+                        // Определяем максимальные значения
+                        if (maxTemperature === null || item.temperature > maxTemperature) {
+                            maxTemperature = item.temperature;
+                            maxTemperatureTime = item.time;
+                        }
+                        if (maxHumidity === null || item.humidity > maxHumidity) {
+                            maxHumidity = item.humidity;
+                            maxHumidityTime = item.time;
+                        }
+                        if (maxWeight === null || item.weight > maxWeight) {
+                            maxWeight = item.weight;
+                            maxWeightTime = item.time;
+                        }
+                    });
+                        // Отображаем максимальные значения
+                        $("#MaxTemperatureInPeriod p").text(maxTemperature + ' (время: ' + maxTemperatureTime + ')');
+                        $("#MaxHumidityInPeriod p").text(maxHumidity + ' (время: ' + maxHumidityTime + ')');
+                        $("#MaxWeightInPeriod p").text(maxWeight + ' (время: ' + maxWeightTime + ')');
+                    } else {
+                        console.error('Ожидался массив, но пришел объект:', data);
+                    }
+                },
+                error: function (error) {
+                    console.error('Ошибка при получении данных:', error);
+                }
+            });
+        });
+    });
+</script>
+<div id="MaxValuesInPeriod">
+    <h1>Максимальные значения</h1>
+</div>
+<div id="MaxTemperatureInPeriod">
+    <h1>Температура</h1>
+    <p th:text="${temperatureValue}"/>
+</div>
+<div id="MaxHumidityInPeriod">
+    <h1>Влажность</h1>
+    <p th:text="${humidityValue}"/>
+</div>
+<div id="MaxWeightInPeriod">
+    <h1>Вес</h1>
+    <p th:text="${weightValue}"/>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  MonitoringAppDB:
+    image: 'postgres:latest'
+    container_name: MonitoringAppDB
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=monitoringappdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5442:5432"
+    networks:
+      - app_network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  MonitoringApp:
+    image: 'monitoring-app'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: MonitoringApp
+    depends_on:
+      MonitoringAppDB:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://MonitoringAppDB:5432/monitoringappdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8080:8080"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    name: app_network
+
+volumes:
+  postgres:
+    name: postgres
