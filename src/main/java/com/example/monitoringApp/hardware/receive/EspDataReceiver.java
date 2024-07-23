@@ -2,8 +2,8 @@ package com.example.monitoringApp.hardware.receive;
 
 import arduino.AlertBox;
 import arduino.Arduino;
-import com.example.monitoringApp.logMessages.Errors;
 import com.example.monitoringApp.data.dto.EspReceiveMessageDTO;
+import com.example.monitoringApp.logMessages.Errors;
 import com.example.monitoringApp.logMessages.Info;
 import com.fazecast.jSerialComm.SerialPort;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class EspDataReceiver {
     private SerialPort comPort = SerialPort.getCommPort(espConnectPort);
 
     @Async
-    public CompletableFuture<EspReceiveMessageDTO>  receiveData() {
+    public CompletableFuture<EspReceiveMessageDTO> receiveData() {
         Arduino espBoard = new Arduino(espConnectPort, 9600);
         log.info("Try connected to board on : " + espConnectPort);
         //log.info("Result : " + espBoard.openConnection());
@@ -35,7 +35,7 @@ public class EspDataReceiver {
         log.info("Connected to board on : " + espConnectPort + " = " + connected);
         try {
             Thread.sleep(4000);
-            log.info(Info.ESP_BORD_CONNECT_SUCCESSFULLY.getInfo() + connected);
+            log.info(Info.ESP_BORD_CONNECT_SUCCESSFULLY.getLogMessage() + connected);
         } catch (InterruptedException e) {
             log.error(Errors.FAILED_CONNECT_TO_ESP_BORD.getError() + espConnectPort, e);
             Thread.currentThread().interrupt();
@@ -47,10 +47,10 @@ public class EspDataReceiver {
             log.info("ESP primary messsage" + messsage);
             messageDto = mapMessageFromBoard(messsage);
             return CompletableFuture.completedFuture(messageDto);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error(Errors.FAILED_TO_MAP_MESSAGE_FROM_ESP_BORD.getError(), e);
             return CompletableFuture.completedFuture(null);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error(Errors.FAILED_TO_READ_MESSAGE_FROM_ESP_BORD.getError(), e);
             return CompletableFuture.completedFuture(null);
         }

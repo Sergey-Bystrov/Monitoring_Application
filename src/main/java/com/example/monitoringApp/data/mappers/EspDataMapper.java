@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-import java.time.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Slf4j
 @Component
@@ -26,7 +26,7 @@ public class EspDataMapper {
         return new EspReceiveMessageDTO(data[0], data[1], data[2]);
     }
 
-    public EspData mapReciveMessageToEntity(EspReceiveMessageDTO espReceiveMessageDTO) {
+    public EspData mapReceiveMessageToEntity(EspReceiveMessageDTO espReceiveMessageDTO) {
         EspData espData = new EspData();
         espData.setHumidity(Float.valueOf(espReceiveMessageDTO.getHumidity()));
         espData.setTemperature(Float.valueOf(espReceiveMessageDTO.getTemperature()));
@@ -34,8 +34,6 @@ public class EspDataMapper {
         ZoneId moscowZoneId = ZoneId.of("Europe/Moscow");
         ZonedDateTime moscowTime = ZonedDateTime.now(moscowZoneId);
         espData.setTime(moscowTime);
-        log.info("Current Moscow time (ZonedDateTime): {}", moscowTime);
-        log.info("End mapping EspData"+espData.getTime());
         return espData;
     }
 
@@ -49,7 +47,6 @@ public class EspDataMapper {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedTime = moscowTime.format(formatter);
         espBusinessDataDTO.setTime(formattedTime);
-        //espBusinessDataDTO.setTime(String.valueOf(espData.getTime()));
         return espBusinessDataDTO;
     }
 }

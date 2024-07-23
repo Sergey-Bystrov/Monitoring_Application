@@ -39,6 +39,6 @@ public class EspDataService {
     }
 
     public void save(EspReceiveMessageDTO espReceiveMessageDTO) {
-        espRepository.save(espDataMapper.mapReciveMessageToEntity(espReceiveMessageDTO));
+        espRepository.save(espDataMapper.mapReceiveMessageToEntity(espReceiveMessageDTO));
     }
 }
